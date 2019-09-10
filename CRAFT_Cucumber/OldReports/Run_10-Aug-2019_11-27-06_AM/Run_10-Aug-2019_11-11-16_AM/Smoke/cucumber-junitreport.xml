@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="23.550754">
+<testcase classname="Login" name="Login with valid username and valid password" time="23.550754">
+<system-out><![CDATA[Given I am in the login page of the application.............................passed
+When I login using the valid username mercury and the valid password mercury.passed
+Then The application should log me in and navigate to the Flight Finder page.passed
+]]></system-out>
+</testcase>
+</testsuite>

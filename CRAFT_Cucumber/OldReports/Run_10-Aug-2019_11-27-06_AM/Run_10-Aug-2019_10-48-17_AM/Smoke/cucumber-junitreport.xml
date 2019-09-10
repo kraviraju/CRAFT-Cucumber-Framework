@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="2" time="32.427145">
+<testcase classname="Login" name="Login with valid username and valid password" time="18.660998">
+<system-out><![CDATA[Given I am in the login page of the application.............................passed
+When I login using the valid username mercury and the valid password mercury.passed
+Then The application should log me in and navigate to the Flight Finder page.passed
+]]></system-out>
+</testcase>
+<testcase classname="Login" name="Login with valid username and valid password 2" time="13.766147">
+<failure message="java.lang.AssertionError: Find a Flight page displayed? expected [true] but found [false]&#13;&#10;&#9;at org.testng.Assert.fail(Assert.java:96)&#13;&#10;&#9;at org.testng.Assert.failNotEquals(Assert.java:776)&#13;&#10;&#9;at org.testng.Assert.assertTrue(Assert.java:44)&#13;&#10;&#9;at com.CucumberCraft.stepDefinitions.LoginStepDefs.application_should_login_navigate_to_FlightFinder_page(LoginStepDefs.java:69)&#13;&#10;&#9;at ✽.Then The application should log me in and navigate to the Flight Finder page(Login.feature:21)&#13;&#10;"><![CDATA[Given I am in the login page of the application.............................passed
+When I login using the valid username test and the valid password test......passed
+Then The application should log me in and navigate to the Flight Finder page.failed
+
+StackTrace:
+java.lang.AssertionError: Find a Flight page displayed? expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:96)
+	at org.testng.Assert.failNotEquals(Assert.java:776)
+	at org.testng.Assert.assertTrue(Assert.java:44)
+	at com.CucumberCraft.stepDefinitions.LoginStepDefs.application_should_login_navigate_to_FlightFinder_page(LoginStepDefs.java:69)
+	at ✽.Then The application should log me in and navigate to the Flight Finder page(Login.feature:21)
+]]></failure>
+</testcase>
+</testsuite>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="3" time="76.342666">
+<testcase classname="Book flight tickets" name="Find and book flight tickets" time="40.579542">
+<system-out><![CDATA[Given I am in the login page of the application.............................passed
+And I login using the valid username mercury and the valid password mercury.passed
+Given I search for flights using the following criteria:....................passed
+And I select the first available flight.....................................passed
+And I book the tickets using the following passenger details:...............passed
+And I use the following credit card details:................................passed
+Then I should get a booking confirmation with a confirmation number.........passed
+]]></system-out>
+</testcase>
+<testcase classname="Login" name="Login with invalid username and invalid password" time="13.470821">
+<system-out><![CDATA[Given I am in the login page of the application.............................passed
+When I login using the invalid username abc and the invalid password xyz....passed
+Then The application should stay on the login page, and not log me in.......passed
+]]></system-out>
+</testcase>
+<testcase classname="Register new user" name="Register new user and login using the newly registered credentials" time="22.292303">
+<system-out><![CDATA[Given I am in the login page of the application.............................passed
+When I register a new user with the following details:......................passed
+Then I should get a confirmation on successful registration.................passed
+When I click on the sign in link............................................passed
+And I login using the valid username icims and the valid password password-1.passed
+Then The application should log me in and navigate to the Flight Finder page.passed
+]]></system-out>
+</testcase>
+</testsuite>

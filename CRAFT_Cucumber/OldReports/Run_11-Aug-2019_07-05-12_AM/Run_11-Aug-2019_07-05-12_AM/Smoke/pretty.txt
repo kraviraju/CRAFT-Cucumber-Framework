@@ -1,0 +1,204 @@
+Feature: Book flight tickets
+  As a user with valid credentials,
+  I want to be able to search for flight tickets between a given source and destination,
+  select from the available options presented, and book the tickets accordingly
+
+  Background:                                                                   # BookFlightTickets.feature:6
+    Given I am in the login page of the application                             # GeneralStepDefs.i_am_in_login_page()
+    And I login using the valid username mercury and the valid password mercury # LoginStepDefs.i_login_using_valid_username_valid_password(String,String)
+The confirmation number is: 2019-08-10183254
+
+  @BookFlight
+  Scenario: Find and book flight tickets                                # BookFlightTickets.feature:11
+    Given I search for flights using the following criteria:            # BookFlightTicketsStepDefs.i_search_for_flights(DataTable)
+    And I select the first available flight                             # BookFlightTicketsStepDefs.i_select_first_available_flight()
+    And I book the tickets using the following passenger details:       # BookFlightTicketsStepDefs.i_book_tickets(DataTable)
+    And I use the following credit card details:                        # BookFlightTicketsStepDefs.i_use_credit_card(DataTable)
+    Then I should get a booking confirmation with a confirmation number # BookFlightTicketsStepDefs.i_should_get_booking_confirmation()
+Feature: Login
+  As a user, I want to be able to login to the application
+  when I present valid credentials
+
+  Background:                                       # Login.feature:5
+    Given I am in the login page of the application # GeneralStepDefs.i_am_in_login_page()
+
+  @InvalidUsername
+  Scenario: Login with invalid username and invalid password                 # Login.feature:9
+    When I login using the invalid username abc and the invalid password xyz # LoginStepDefs.i_login_using_invalid_username_invalid_password(String,String)
+    Then The application should stay on the login page, and not log me in    # LoginStepDefs.application_should_stay_on_login_page()
+
+  Background:                                       # Login.feature:5
+    Given I am in the login page of the application # GeneralStepDefs.i_am_in_login_page()
+
+  @InvalidPassword
+  Scenario: Login with valid username and invalid password                     # Login.feature:14
+    When I login using the valid username mercury and the invalid password xyz # LoginStepDefs.i_login_using_valid_username_invalid_password(String,String)
+    Then The application should stay on the login page, and not log me in      # LoginStepDefs.application_should_stay_on_login_page()
+
+  @validlogin
+  Scenario Outline: Login with valid username and valid password                       # Login.feature:19
+    When I login using the valid username <Username> and the valid password <Password>
+    Then The application should log me in and navigate to the Flight Finder page
+
+  @Invalidlogin
+  Scenario Outline: Login with valid username and valid password                           # Login.feature:24
+    When I login using the invalid username <Username> and the invalid password <Password>
+    Then The application should not log me in and show login page
+
+    Examples: 
+
+  Background:                                       # Login.feature:5
+    Given I am in the login page of the application # GeneralStepDefs.i_am_in_login_page()
+
+  @Invalidlogin
+  Scenario Outline: Login with valid username and valid password                     # Login.feature:30
+    When I login using the invalid username mercury and the invalid password mercury # LoginStepDefs.i_login_using_invalid_username_invalid_password(String,String)
+    Then The application should not log me in and show login page                    # LoginStepDefs.The_application_should_not_log_me_in_and_show_login_page()
+      java.lang.AssertionError: Login page displayed? expected [true] but found [false]
+      	at org.testng.Assert.fail(Assert.java:96)
+      	at org.testng.Assert.failNotEquals(Assert.java:776)
+      	at org.testng.Assert.assertTrue(Assert.java:44)
+      	at com.CucumberCraft.stepDefinitions.LoginStepDefs.The_application_should_not_log_me_in_and_show_login_page(LoginStepDefs.java:73)
+      	at ✽.Then The application should not log me in and show login page(Login.feature:26)
+
+
+  Background:                                       # Login.feature:5
+    Given I am in the login page of the application # GeneralStepDefs.i_am_in_login_page()
+
+  @Invalidlogin
+  Scenario Outline: Login with valid username and valid password                  # Login.feature:31
+    When I login using the invalid username mercury and the invalid password test # LoginStepDefs.i_login_using_invalid_username_invalid_password(String,String)
+    Then The application should not log me in and show login page                 # LoginStepDefs.The_application_should_not_log_me_in_and_show_login_page()
+Feature: Register new user
+  As a new user to the application, I want to be able to register myself
+  so that I can login and use the application further
+
+  @Register
+  Scenario: Register new user and login using the newly registered credentials   # RegisterNewUser.feature:6
+    Given I am in the login page of the application                              # GeneralStepDefs.i_am_in_login_page()
+    When I register a new user with the following details:                       # RegisterUserStepDefs.registerUser(DataTable)
+    Then I should get a confirmation on successful registration                  # RegisterUserStepDefs.i_should_get_registration_confirmation()
+    When I click on the sign in link                                             # LoginStepDefs.i_click_on_signin_link()
+    And I login using the valid username icims and the valid password password-1 # LoginStepDefs.i_login_using_valid_username_valid_password(String,String)
+    Then The application should log me in and navigate to the Flight Finder page # LoginStepDefs.application_should_login_navigate_to_FlightFinder_page()
+Feature: Eribank Application
+
+  @Sanity
+  Scenario: Login to EriBank             # eribankFeature.feature:4
+    Given I launch eribank               # EribankLogin.i_launch_eribank()
+    When I enter "company" and "company" # EribankLogin.i_enter_and(String,String)
+      org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"id","selector":"com.experitest.ExperiBank:id/usernameTextField"}
+        (Session info: chrome=75.0.3770.142)
+        (Driver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+      Command duration or timeout: 10.11 seconds
+      For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+      Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+      System info: host: 'HYDPCM144977L', ip: '192.168.1.11', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+      Driver info: org.openqa.selenium.chrome.ChromeDriver
+      Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0, pageLoad=300000, script=30000}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:60229}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1), userDataDir=C:\Users\ravi.kuchharlapati\AppData\Local\Temp\scoped_dir8692_12163}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=75.0.3770.142, browserConnectionEnabled=false, proxy={}, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+      Session ID: de5545dbac0e87bbbe4787877739a25d
+      *** Element info: {Using=id, value=com.experitest.ExperiBank:id/usernameTextField}
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+      	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+      	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+      	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:413)
+      	at org.openqa.selenium.By$ById.findElement(By.java:218)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+      	at com.CucumberCraft.supportLibraries.CraftDriver.findElement(CraftDriver.java:104)
+      	at com.CucumberCraft.stepDefinitions.EribankLogin.i_enter_and(EribankLogin.java:25)
+      	at ✽.When I enter "company" and "company"(eribankFeature.feature:6)
+
+    Then I click LOGIN                   # EribankLogin.i_click_LOGIN()
+    And I click LOGOUT                   # EribankLogin.i_click_LOGOUT()
+
+  @Regression @Sanity
+  Scenario Outline: MakePayment                                                 # eribankFeature.feature:11
+    Given I launch eribank
+    When I enter "company" and "company"
+    Then I click LOGIN
+    When I click Make Payment
+    And I enter Phone number as "<phone>" name as "<name>" Amount as "<amount>"
+    Then I select country as "<country>"
+    And click Send Payment
+    And I click LOGOUT
+
+    Examples: 
+
+  @Sanity @Regression
+  Scenario Outline: MakePayment                                                   # eribankFeature.feature:23
+    Given I launch eribank                                                        # EribankLogin.i_launch_eribank()
+    When I enter "company" and "company"                                          # EribankLogin.i_enter_and(String,String)
+      org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"id","selector":"com.experitest.ExperiBank:id/usernameTextField"}
+        (Session info: chrome=75.0.3770.142)
+        (Driver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+      Command duration or timeout: 10.05 seconds
+      For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+      Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+      System info: host: 'HYDPCM144977L', ip: '192.168.1.11', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+      Driver info: org.openqa.selenium.chrome.ChromeDriver
+      Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0, pageLoad=300000, script=30000}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:60252}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1), userDataDir=C:\Users\ravi.kuchharlapati\AppData\Local\Temp\scoped_dir4912_14725}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=75.0.3770.142, browserConnectionEnabled=false, proxy={}, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+      Session ID: 55c060ef1cbbcc04b871ed4b325b3d1a
+      *** Element info: {Using=id, value=com.experitest.ExperiBank:id/usernameTextField}
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+      	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+      	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+      	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:413)
+      	at org.openqa.selenium.By$ById.findElement(By.java:218)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+      	at com.CucumberCraft.supportLibraries.CraftDriver.findElement(CraftDriver.java:104)
+      	at com.CucumberCraft.stepDefinitions.EribankLogin.i_enter_and(EribankLogin.java:25)
+      	at ✽.When I enter "company" and "company"(eribankFeature.feature:13)
+
+    Then I click LOGIN                                                            # EribankLogin.i_click_LOGIN()
+    When I click Make Payment                                                     # EribankPayment.i_click_Make_Payment()
+    And I enter Phone number as "9876543210" name as "kasthuri" Amount as "10000" # EribankPayment.i_enter_Phone_number_as_name_as_Amount_as(String,String,String)
+    Then I select country as "India"                                              # EribankPayment.i_select_country_as(String)
+    And click Send Payment                                                        # EribankPayment.click_Send_Payment()
+    And I click LOGOUT                                                            # EribankLogin.i_click_LOGOUT()
+
+  @Sanity @Regression
+  Scenario Outline: MakePayment                                            # eribankFeature.feature:24
+    Given I launch eribank                                                 # EribankLogin.i_launch_eribank()
+    When I enter "company" and "company"                                   # EribankLogin.i_enter_and(String,String)
+      org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"id","selector":"com.experitest.ExperiBank:id/usernameTextField"}
+        (Session info: chrome=75.0.3770.142)
+        (Driver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+      Command duration or timeout: 10.07 seconds
+      For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+      Build info: version: '2.53.1', revision: 'a36b8b1cd5757287168e54b817830adce9b0158d', time: '2016-06-30 19:26:09'
+      System info: host: 'HYDPCM144977L', ip: '192.168.1.11', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_202'
+      Driver info: org.openqa.selenium.chrome.ChromeDriver
+      Capabilities [{mobileEmulationEnabled=false, timeouts={implicit=0, pageLoad=300000, script=30000}, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:60269}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=ignore, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1), userDataDir=C:\Users\ravi.kuchharlapati\AppData\Local\Temp\scoped_dir3380_27191}, takesHeapSnapshot=true, pageLoadStrategy=normal, strictFileInteractability=false, databaseEnabled=false, handlesAlerts=true, version=75.0.3770.142, browserConnectionEnabled=false, proxy={}, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+      Session ID: 3bb632ec2992d2902971ab12cf3559c9
+      *** Element info: {Using=id, value=com.experitest.ExperiBank:id/usernameTextField}
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+      	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+      	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+      	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+      	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+      	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+      	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:678)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:363)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:413)
+      	at org.openqa.selenium.By$ById.findElement(By.java:218)
+      	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+      	at com.CucumberCraft.supportLibraries.CraftDriver.findElement(CraftDriver.java:104)
+      	at com.CucumberCraft.stepDefinitions.EribankLogin.i_enter_and(EribankLogin.java:25)
+      	at ✽.When I enter "company" and "company"(eribankFeature.feature:13)
+
+    Then I click LOGIN                                                     # EribankLogin.i_click_LOGIN()
+    When I click Make Payment                                              # EribankPayment.i_click_Make_Payment()
+    And I enter Phone number as "123456" name as "nizam" Amount as "10000" # EribankPayment.i_enter_Phone_number_as_name_as_Amount_as(String,String,String)
+    Then I select country as "USA"                                         # EribankPayment.i_select_country_as(String)
+    And click Send Payment                                                 # EribankPayment.click_Send_Payment()
+    And I click LOGOUT                                                     # EribankLogin.i_click_LOGOUT()

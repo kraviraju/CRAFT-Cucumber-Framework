@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Run Test Cukes" parallel="tests" verbose="1"
+	configfailurepolicy="continue" thread-count="1">
+
+	<listeners>
+		<!-- This TestNG listener takes care of setting up and tearing down the 
+			WebDriver, and it also changes test names in the final TestNG HTML report. -->
+		<listener class-name="com.CucumberCraft.supportLibraries.WebDriverListener" />
+	</listeners>
+
+	<!-- Possible Parameters and Values ExecutionMode = LOCAL,MOBILE,PERFECTO 
+		MobileExecutionPlatform = ANDROID, IOS, WEB_ANDROID, WEB_IOS DeviceName = 
+		"Please give the respective deviceName/UDID" OR ManufacturerName = Apple 
+		etc., ModelName = iPhone 7etc., etc., -->
+
+
+	<test name="Smoke Tests of MOVE in iOS Perfecto for iPhone 7">
+		<parameter name="ExecutionMode" value="LOCAL" />
+		<parameter name="BrowserName" value="CHROME" />
+		<classes>
+			<class name="com.CucumberCraft.TestNGrunners.RunCucumberTests_Smoke" />
+		</classes>
+	</test>
+
+	<!-- <test
+		name="Smoke Tests of MOVE in Android Device Perfecto Galaxy S7 
+		Edge">
+		<parameter name="ExecutionMode" value="MOBILE" />
+		<parameter name="MobileExecutionPlatform" value="ANDROID_WEB" />
+		<parameter name="DeviceName" value="1E5D5273" />
+		<classes>
+			<class name="com.CucumberCraft.TestNGrunners.RunCucumberTests_Smoke" />
+		</classes>
+	</test>
+
+	<test name="Smoke Tests of MOVE in iOS Perfecto for iPhone 7 Plus">
+		<parameter name="ExecutionMode" value="PERFECTO" />
+		<parameter name="MobileExecutionPlatform" value="IOS" />
+		<parameter name="DeviceName" value="C12A52847D6CDCBF32BD63F49C917D38AF8A4D78" />
+		<classes>
+			<class name="com.CucumberCraft.TestNGrunners.RunCucumberTests_Smoke" />
+		</classes>
+	</test> -->
+
+</suite>

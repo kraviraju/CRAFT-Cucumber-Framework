@@ -1,0 +1,33 @@
+Feature: Login
+  As a user, I want to be able to login to the application
+  when I present valid credentials
+
+  @validlogin
+  Scenario Outline: Login with valid username and valid password                       # Login.feature:19
+    When I login using the valid username <Username> and the valid password <Password>
+    Then The application should log me in and navigate to the Flight Finder page
+
+    Examples: 
+
+  Background:                                       # Login.feature:5
+    Given I am in the login page of the application # GeneralStepDefs.i_am_in_login_page()
+
+  @validlogin
+  Scenario Outline: Login with valid username and valid password                 # Login.feature:25
+    When I login using the valid username mercury and the valid password mercury # LoginStepDefs.i_login_using_valid_username_valid_password(String,String)
+    Then The application should log me in and navigate to the Flight Finder page # LoginStepDefs.application_should_login_navigate_to_FlightFinder_page()
+
+  Background:                                       # Login.feature:5
+    Given I am in the login page of the application # GeneralStepDefs.i_am_in_login_page()
+
+  @validlogin
+  Scenario Outline: Login with valid username and valid password                 # Login.feature:26
+    When I login using the valid username test and the valid password test       # LoginStepDefs.i_login_using_valid_username_valid_password(String,String)
+    Then The application should log me in and navigate to the Flight Finder page # LoginStepDefs.application_should_login_navigate_to_FlightFinder_page()
+      java.lang.AssertionError: Find a Flight page displayed? expected [true] but found [false]
+      	at org.testng.Assert.fail(Assert.java:96)
+      	at org.testng.Assert.failNotEquals(Assert.java:776)
+      	at org.testng.Assert.assertTrue(Assert.java:44)
+      	at com.CucumberCraft.stepDefinitions.LoginStepDefs.application_should_login_navigate_to_FlightFinder_page(LoginStepDefs.java:69)
+      	at ✽.Then The application should log me in and navigate to the Flight Finder page(Login.feature:21)
+
